@@ -1,5 +1,10 @@
 package com.solution.reddy.global.jwt;
 
+import static com.solution.reddy.global.message.AuthMessage.INVALID_ACCESS_TOKEN;
+import static com.solution.reddy.global.message.AuthMessage.INVALID_USER;
+
+import com.solution.reddy.global.exception.ApiException;
+import io.jsonwebtoken.IncorrectClaimException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,6 +13,7 @@ import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -21,10 +27,18 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
         String jwt = resolveToken(request);
+        try {
+            if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
+                Authentication authentication = tokenProvider.getAuthentication(jwt);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        } catch (IncorrectClaimException e) { // 잘못된 토큰일 경우
+            SecurityContextHolder.clearContext();
+            throw new ApiException(INVALID_ACCESS_TOKEN);
 
-        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-            Authentication authentication = tokenProvider.getAuthentication(jwt);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        } catch (UsernameNotFoundException e) { // 회원을 찾을 수 없을 경우
+            SecurityContextHolder.clearContext();
+            throw new ApiException(INVALID_USER);
         }
 
         filterChain.doFilter(request, response);
