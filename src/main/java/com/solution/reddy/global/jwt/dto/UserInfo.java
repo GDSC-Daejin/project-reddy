@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import lombok.Getter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.CredentialsContainer;
@@ -21,6 +22,9 @@ public class UserInfo implements UserDetails, CredentialsContainer {
     @Serial
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
     private static final Log logger = LogFactory.getLog(User.class);
+    @Getter
+    private final String provider;
+    @Getter
     private final String email;
     private final Set<GrantedAuthority> authorities;
     private final boolean accountNonExpired;
@@ -31,13 +35,14 @@ public class UserInfo implements UserDetails, CredentialsContainer {
 
     private final boolean enabled;
 
-    public UserInfo(String email, Collection<? extends GrantedAuthority> authorities) {
-        this(email, true, true, true, true, authorities);
+    public UserInfo(String provider, String email, Collection<? extends GrantedAuthority> authorities) {
+        this(provider, email, true, true, true, true, authorities);
     }
 
-    public UserInfo(String email, boolean enabled, boolean accountNonExpired,
+    public UserInfo(String provider, String email, boolean enabled, boolean accountNonExpired,
                     boolean credentialsNonExpired, boolean accountNonLocked,
                     Collection<? extends GrantedAuthority> authorities) {
+        this.provider = provider;
         Assert.isTrue(email != null && !"".equals(email),
                 "Cannot pass null or empty values to constructor");
         this.email = email;
@@ -46,10 +51,6 @@ public class UserInfo implements UserDetails, CredentialsContainer {
         this.credentialsNonExpired = credentialsNonExpired;
         this.accountNonLocked = accountNonLocked;
         this.authorities = Collections.unmodifiableSet(sortAuthorities(authorities));
-    }
-
-    public String getEmail() {
-        return this.email;
     }
 
 

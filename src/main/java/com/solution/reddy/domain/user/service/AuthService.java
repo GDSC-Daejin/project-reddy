@@ -6,6 +6,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
+import com.solution.reddy.domain.user.entity.RoleType;
 import com.solution.reddy.domain.user.entity.SocialType;
 import com.solution.reddy.domain.user.info.impl.GoogleOAuth2UserInfo;
 import com.solution.reddy.global.exception.ApiException;
@@ -55,7 +56,7 @@ public class AuthService {
     }
 
     @Transactional
-    public void logout(String requestAccessTokenInHeader, String email, String socialType) {
+    public void logout(String socialType, String email, String requestAccessTokenInHeader) {
         String requestAccessToken = resolveToken(requestAccessTokenInHeader);
 
         // Redis에 저장되어 있는 RT 삭제
@@ -97,7 +98,7 @@ public class AuthService {
             redisService.deleteValues("RT(" + provider + "):" + email); // 삭제
         }
         // AT, RT 생성 및 Redis에 RT 저장
-        TokenResponse tokenDto = createJwtToken(email);
+        TokenResponse tokenDto = createJwtToken(provider, email);
         saveRefreshToken(provider, email, tokenDto.refreshToken());
         return tokenDto;
     }
@@ -109,8 +110,8 @@ public class AuthService {
                 tokenProvider.getTokenExpirationTime(refreshToken)); // timeout(milliseconds)
     }
 
-    private TokenResponse createJwtToken(String email) {
-        return tokenProvider.generateJwtToken(email);
+    private TokenResponse createJwtToken(String provider, String email) {
+        return tokenProvider.generateJwtToken(provider, email, RoleType.MEMBER);
     }
 
     // "Bearer {AT}"에서 {AT} 추출

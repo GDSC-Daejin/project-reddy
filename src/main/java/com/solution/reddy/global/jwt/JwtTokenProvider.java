@@ -1,5 +1,7 @@
 package com.solution.reddy.global.jwt;
 
+import com.solution.reddy.domain.user.entity.RoleType;
+import com.solution.reddy.domain.user.entity.SocialType;
 import com.solution.reddy.global.jwt.dto.TokenResponse;
 import com.solution.reddy.global.jwt.dto.UserInfo;
 import com.solution.reddy.global.service.RedisService;
@@ -46,16 +48,20 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public TokenResponse generateJwtToken(String email) {
-        return makeTokenResponse(email, ACCESS_TOKEN_EXPIRE_TIME, REFRESH_TOKEN_EXPIRE_TIME);
+    public TokenResponse generateJwtToken(String socialType, String email, RoleType role) {
+        return makeTokenResponse(socialType, email, role);
     }
 
-    private TokenResponse makeTokenResponse(String email, long accessTokenExpireTime, long refreshTokenExpireTime) {
+    private TokenResponse makeTokenResponse(String socialType, String email, RoleType role) {
         long now = getNow();
 
-        Map<String, Object> payloads = Map.of("email", email);
+        Map<String, Object> payloads = Map.of(
+                "email", email,
+                "socialType", socialType,
+                AUTHORITIES_KEY, role
+                );
 
-        Date accessTokenExpiresIn = new Date(now + accessTokenExpireTime);
+        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         String accessToken = Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setHeaderParam("alg", "HS512")
@@ -69,7 +75,7 @@ public class JwtTokenProvider {
                 .setHeaderParam("typ", "JWT")
                 .setHeaderParam("alg", "HS512")
                 .setSubject("refresh-token")
-                .setExpiration(new Date(now + refreshTokenExpireTime))
+                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
@@ -78,10 +84,6 @@ public class JwtTokenProvider {
 
     private static long getNow() {
         return (new Date()).getTime();
-    }
-
-    public TokenResponse generateJwtTokenForTest(String email, long expireTime) {
-        return makeTokenResponse(email, expireTime, expireTime);
     }
 
     public Authentication getAuthentication(String accessToken) {
@@ -98,7 +100,7 @@ public class JwtTokenProvider {
                         .toList();
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        UserDetails principal = new UserInfo(claims.get("email").toString(), authorities);
+        UserDetails principal = new UserInfo(claims.get("socialType").toString(), claims.get("email").toString(), authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
