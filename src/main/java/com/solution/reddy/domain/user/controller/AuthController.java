@@ -22,4 +22,13 @@ public class AuthController {
         TokenResponse tokenResponse = authService.googleLogin(socialLoginRequest.token());
         return ReddyApiResponse.createResponse(tokenResponse, UserMessage.LOGIN_SUCCESS);
     }
+
+    @PostMapping("/auth/logintest")
+    public ReddyApiResponse<TokenResponse>testLogin() {
+        String testEmail = "test@test.com";
+        TokenResponse tokenResponse = authService.testLogin(testEmail);
+        return ReddyApiResponse.createResponse(tokenResponse, UserMessage.LOGIN_SUCCESS);
+    }
+
+
 }

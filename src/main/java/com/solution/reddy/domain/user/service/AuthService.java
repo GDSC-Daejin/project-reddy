@@ -6,6 +6,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
+import com.solution.reddy.domain.user.entity.SocialType;
 import com.solution.reddy.domain.user.info.impl.GoogleOAuth2UserInfo;
 import com.solution.reddy.global.exception.ApiException;
 import com.solution.reddy.global.jwt.JwtTokenProvider;
@@ -46,6 +47,11 @@ public class AuthService {
         } catch (IllegalArgumentException | HttpClientErrorException | GeneralSecurityException | IOException e) {
             throw new ApiException(INVALID_ID_TOKEN);
         }
+    }
+
+    @Transactional
+    public TokenResponse testLogin(String email) {
+        return generateJwtToken(String.valueOf(SocialType.TEST), email);
     }
 
     @Transactional
