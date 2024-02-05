@@ -122,12 +122,12 @@ public class JwtTokenProvider {
         return false;
     }
 
-    public Claims parseClaims(String accessToken) {
+    public Claims parseClaims(String token) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
-                    .parseClaimsJws(accessToken)
+                    .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException e) {
             return e.getClaims();
@@ -135,11 +135,20 @@ public class JwtTokenProvider {
     }
 
     public Long getExpiration(String token) {
-        Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getExpiration();
+        Date expiration = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration();
 
         // 현재 시간
         Long now = new Date().getTime();
         return (expiration.getTime() - now);
+    }
+
+    public long getTokenExpirationTime(String token) {
+        return parseClaims(token).getExpiration().getTime();
     }
 
     // Filter에서 사용

@@ -28,6 +28,7 @@ public class UserEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
+    private String name;
     private String email;
     private String imageUrl;
 

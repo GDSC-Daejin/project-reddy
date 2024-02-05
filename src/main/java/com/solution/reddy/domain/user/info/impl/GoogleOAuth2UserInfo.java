@@ -21,5 +21,7 @@ public class GoogleOAuth2UserInfo extends OAuth2UserInfo {
         this.imageUrl = (String) payload.get("picture");
     }
 
-
+    public String getSocialTypeName() {
+        return socialType.toString();
+    }
 }
