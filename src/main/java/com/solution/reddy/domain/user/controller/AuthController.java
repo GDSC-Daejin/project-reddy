@@ -42,8 +42,8 @@ public class AuthController {
     }
 
     @DeleteMapping("/auth/user")
-    public ReddyApiResponse<?> logout(@AuthenticationPrincipal UserInfo user, @RequestBody LogoutRequest logoutRequest) {
-        authService.logout(user.getProvider(), user.getEmail() , logoutRequest.accessToken());
+    public ReddyApiResponse<?> logout(@AuthenticationPrincipal UserInfo user) {
+        authService.logout(user.getProvider(), user.getEmail());
         return ReddyApiResponse.createResponse(null, UserMessage.LOGOUT_SUCCESS);
     }
 }

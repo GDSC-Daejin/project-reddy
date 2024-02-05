@@ -56,8 +56,8 @@ public class AuthService {
     }
 
     @Transactional
-    public void logout(String socialType, String email, String requestAccessTokenInHeader) {
-        String requestAccessToken = resolveToken(requestAccessTokenInHeader);
+    public void logout(String socialType, String email) {
+//        String requestAccessToken = resolveToken(requestAccessTokenInHeader);
 
         // Redis에 저장되어 있는 RT 삭제
         String refreshTokenInRedis = redisService.getValues("RT(" + socialType + "):" + email);
@@ -65,11 +65,11 @@ public class AuthService {
             redisService.deleteValues("RT(" + socialType + "):" + email);
         }
 
-        // Redis에 로그아웃 처리한 AT 저장
-        long expiration = tokenProvider.getTokenExpirationTime(requestAccessToken) - new Date().getTime();
-        redisService.setValuesWithTimeout(requestAccessToken,
-                "logout",
-                expiration);
+//        // Redis에 로그아웃 처리한 AT 저장
+//        long expiration = tokenProvider.getTokenExpirationTime(requestAccessToken) - new Date().getTime();
+//        redisService.setValuesWithTimeout(requestAccessToken,
+//                "logout",
+//                expiration);
     }
 
     // 토큰 재발급: validate 메서드가 true 반환할 때만 사용 -> AT, RT 재발급
