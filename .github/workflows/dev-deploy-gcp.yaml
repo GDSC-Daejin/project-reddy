@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+env:
+  DOCKER_REPO_NAME: ${{ secrets.DOCKER_REPO_NAME }}
+  SHA: ${{ github.sha }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -33,6 +37,16 @@ jobs:
         touch ./application-dev.properties
         echo "${{secrets.DEV_SPRING_PROPERTIES}}" > ./application-dev.properties
       shell: bash
-      # Gradle build (Test 제외)
+    # Gradle build (Test 제외)
     - name: Build with Gradle
       run: ./gradlew clean build --exclude-task test
+
+    # Docker 이미지 빌드
+    - name: Docker Build
+      run: |
+        docker login --username=peonypeonypeony --password=${{ secrets.DOCKER_USER_PW }}
+        docker build --tag peonypeonypeony/$DOCKER_REPO_NAME:reddy-image-$GITHUB_SHA . -f Dockerfile-dev
+
+    - name: Docker Push
+      run: |
+        docker push peonypeonypeony/$DOCKER_REPO_NAME:reddy-image-$GITHUB_SHA
