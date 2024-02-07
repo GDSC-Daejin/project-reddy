@@ -36,4 +36,4 @@ jobs:
       # Gradle build (Test 제외)
     - name: Build with Gradle
       uses: |
-        ./gradlew clean build -Pprofile=dev --exclude-task test
+        ./gradlew clean build --exclude-task test
