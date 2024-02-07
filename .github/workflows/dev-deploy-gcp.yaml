@@ -45,7 +45,7 @@ jobs:
     - name: Docker Build
       run: |
         docker login --username=peonypeonypeony --password=${{ secrets.DOCKER_USER_PW }}
-        docker build --tag peonypeonypeony/$DOCKER_REPO_NAME:reddy-image-$GITHUB_SHA . -f Dockerfile-dev
+        docker build --tag peonypeonypeony/$DOCKER_REPO_NAME:reddy-image-$GITHUB_SHA . -f Dockerfile
 
     - name: Docker Push
       run: |
