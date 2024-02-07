@@ -1,5 +1,6 @@
 package com.solution.reddy.domain.user.entity;
 
+import com.solution.reddy.global.entity.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,19 +22,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity @Builder @Table(name = "tb_user")
 @AllArgsConstructor
-public class User {
+public class UserEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
+    private String name;
     private String email;
     private String imageUrl;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "charactor_profile_id")
-    private CharacterProfile charactorProfileId;
+    @JoinColumn(name = "character_profile_id")
+    private CharacterProfile characterProfileId;
 
     @Enumerated(EnumType.STRING)
     private SocialType socialType; // KAKAO, NAVER, GOOGLE
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
 }

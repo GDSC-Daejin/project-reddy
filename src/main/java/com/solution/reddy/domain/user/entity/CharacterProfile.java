@@ -20,7 +20,7 @@ public class CharacterProfile {
     @Id @Column(name = "character_profile_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    String name;
+    String characterName;
     String imageUrl;
     String description;
 }
