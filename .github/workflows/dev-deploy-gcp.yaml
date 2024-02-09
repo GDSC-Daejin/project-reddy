@@ -42,7 +42,8 @@ jobs:
       shell: bash
     # Gradle build (Test 제외)
     - name: Build with Gradle
-      run: ./gradlew clean build --exclude-task test
+      run: ./gradlew clean build -Pprofile=dev --exclude-task test
+
 #
 #    # Docker 이미지 빌드
 #    - name: Docker Build
@@ -81,7 +82,7 @@ jobs:
 
     - name: Docker Deploy and Run
       run: | 
-          sudo docker ps -aq --filter "name=reddy-dev" | xargs sudo docker stop | xargs sudo docker rmi
+          sudo docker ps -aq --filter "name=reddy-dev" | xargs sudo docker stop | xargs sudo docker rm
           sudo docker image prune -a -f
           sudo docker pull asia-northeast3-docker.pkg.dev/$PROJECT_ID/$GCE_INSTANCE/$GCE_INSTANCE-image:$GITHUB_SHA
           sudo docker run -d -p 8080:8080 --name reddy-dev \
