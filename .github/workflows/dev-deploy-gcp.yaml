@@ -76,6 +76,13 @@ jobs:
         docker push "asia-northeast3-docker.pkg.dev/$PROJECT_ID/$GCE_INSTANCE/$GCE_INSTANCE-image:$GITHUB_SHA"
     - name: Deploy
       run: |-
-        gcloud compute instances update-container "$GCE_INSTANCE" \
-          --zone "$GCE_INSTANCE_ZONE" \
-          --container-image "asia-northeast3-docker.pkg.dev/$PROJECT_ID/$GCE_INSTANCE/$GCE_INSTANCE-image:$GITHUB_SHA"
+        docker pull \
+          "asia-northeast3-docker.pkg.dev/$PROJECT_ID/$GCE_INSTANCE/$GCE_INSTANCE-image:$GITHUB_SHA"
+
+    - name: Docker Deploy and Run
+      run: | 
+          sudo docker ps -aq --filter "name=reddy-dev" | xargs sudo docker stop | xargs sudo docker rm
+          sudo docker image prune -a -f
+          sudo docker pull asia-northeast3-docker.pkg.dev/$PROJECT_ID/$GCE_INSTANCE/$GCE_INSTANCE-image:$GITHUB_SHA
+          sudo docker run -d -p 8080:8080 --name reddy-dev \
+            asia-northeast3-docker.pkg.dev/$PROJECT_ID/$GCE_INSTANCE/$GCE_INSTANCE-image:$GITHUB_SHA
