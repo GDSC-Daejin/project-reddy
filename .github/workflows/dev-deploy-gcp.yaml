@@ -53,18 +53,19 @@ jobs:
 #    - name: Docker Push
 #      run: |
 #        docker push peonypeonypeony/$DOCKER_REPO_NAME:reddy-image-$GITHUB_SHA
-
-    - name: Setup gcloud
+    - name: Set up gcloud
       uses: google-github-actions/setup-gcloud@v2
+
+    - name: Setup gcloud auth
+      uses: google-github-actions/auth@v2
       with:
-        service_account_key: ${{ secrets.GCE_SERVICE_ACCOUNT_KEY }}
+        credentials_json: ${{ secrets.GCE_SERVICE_ACCOUNT_KEY }}
         project_id: ${{ secrets.GCE_PROJECT_ID }}
         export_default_credentials: false
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
     - run: |-
-        gcloud auth configure-docker \
-        asia-northeast3-docker.pkg.dev
+        gcloud auth configure-docker asia-northeast3-docker.pkg.dev
     # Build the Docker image
     - name: Build
       run: |-
