@@ -81,7 +81,7 @@ jobs:
 
     - name: Docker Deploy and Run
       run: | 
-          sudo docker ps -aq --filter "name=reddy-dev" | xargs sudo docker stop | xargs sudo docker rm
+          sudo docker ps -aq --filter "name=reddy-dev" | xargs sudo docker stop | xargs sudo docker rmi
           sudo docker image prune -a -f
           sudo docker pull asia-northeast3-docker.pkg.dev/$PROJECT_ID/$GCE_INSTANCE/$GCE_INSTANCE-image:$GITHUB_SHA
           sudo docker run -d -p 8080:8080 --name reddy-dev \
