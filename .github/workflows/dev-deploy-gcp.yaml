@@ -14,9 +14,6 @@ env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   SHA: ${{ github.sha }}
-  PROJECT_ID: ${{ secrets.GCE_PROJECT_ID }}
-  GCE_INSTANCE: ${{ secrets.GCE_INSTANCE }}
-  GCE_INSTANCE_ZONE: ${{ secrets.GCE_INSTANCE_ZONE }}
 
 jobs:
   build:
@@ -51,3 +48,16 @@ jobs:
         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         docker build --tag $DOCKER_USERNAME/$DOCKER_REPO_NAME:reddy-image-$SHA . 
         docker push $DOCKER_USERNAME/$DOCKER_REPO_NAME:reddy-image-$SHA
+    # GCP 인스턴스에 Docker 이미지 배포
+    - name: Deploy to GCP
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.GCE_HOST }}
+        username: ${{ secrets.GCE_USERNAME }}
+        key: ${{ secrets.GCE_PRIVATE_KEY }}
+        envs: DOCKER_USERNAME, DOCKER_REPO_NAME, SHA
+        script: |
+          sudo docker ps -aq --filter "name=reddy-dev" | xargs sudo docker stop | xargs sudo docker rm
+          sudo docker image prune -a -f
+          sudo docker pull $DOCKER_USERNAME/$DOCKER_REPO_NAME:reddy-image-$SHA
+          sudo docker run -d -p 8080:8080 --name reddy-dev $DOCKER_USERNAME/$DOCKER_REPO_NAME:reddy-image-$SHA
