@@ -56,7 +56,7 @@ jobs:
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
     - run: |-
-        gcloud auth configure-docker $GCE_INSTANCE_ZONE-docker.pkg.dev
+        gcloud auth configure-docker asia-northeast3-docker.pkg.dev
     # Build the Docker image
     - name: Build
       run: |-
