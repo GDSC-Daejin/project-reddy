@@ -8,7 +8,10 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.solution.reddy.domain.user.entity.RoleType;
 import com.solution.reddy.domain.user.entity.SocialType;
+import com.solution.reddy.domain.user.info.OAuth2UserInfo;
 import com.solution.reddy.domain.user.info.impl.GoogleOAuth2UserInfo;
+import com.solution.reddy.domain.user.info.impl.TestOAuth2UserInfo;
+import com.solution.reddy.domain.user.repository.UserRepository;
 import com.solution.reddy.global.exception.ApiException;
 import com.solution.reddy.global.jwt.JwtTokenProvider;
 import com.solution.reddy.global.jwt.dto.TokenResponse;
@@ -30,6 +33,7 @@ public class AuthService {
     private String googleClientId;
     private final JwtTokenProvider tokenProvider;
     private final RedisService redisService;
+    private final UserRepository userRepository;
 
     public TokenResponse googleLogin(String idToken) {
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
@@ -43,6 +47,7 @@ public class AuthService {
             }
             else {
                 GoogleOAuth2UserInfo userInfo = new GoogleOAuth2UserInfo(googleIdToken.getPayload());
+                saveUser(userInfo);
                 return generateJwtToken(userInfo.getSocialTypeName(), userInfo.getEmail());
             }
         } catch (IllegalArgumentException | HttpClientErrorException | GeneralSecurityException | IOException e) {
@@ -50,8 +55,13 @@ public class AuthService {
         }
     }
 
+    private void saveUser(OAuth2UserInfo userInfo) {
+        userRepository.save(userInfo.createUserEntity());
+    }
+
     @Transactional
     public TokenResponse testLogin(String email) {
+        saveUser(new TestOAuth2UserInfo());
         return generateJwtToken(String.valueOf(SocialType.TEST), email);
     }
 

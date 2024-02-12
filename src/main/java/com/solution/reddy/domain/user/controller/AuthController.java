@@ -1,7 +1,9 @@
 package com.solution.reddy.domain.user.controller;
 
+import com.solution.reddy.domain.user.controller.springdocs.GoogleLoginSpringDocs;
+import com.solution.reddy.domain.user.controller.springdocs.LogoutSpringDocs;
+import com.solution.reddy.domain.user.controller.springdocs.ReissueSpringDocs;
 import com.solution.reddy.domain.user.dto.request.SocialLoginRequest;
-import com.solution.reddy.domain.user.dto.request.LogoutRequest;
 import com.solution.reddy.domain.user.dto.request.ReissueRequest;
 import com.solution.reddy.domain.user.service.AuthService;
 import com.solution.reddy.global.controller.FirstVersionRestController;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class AuthController {
     private final AuthService authService;
 
+    @GoogleLoginSpringDocs
     @PostMapping("/auth/google")
     public ReddyApiResponse<TokenResponse> googleLogin(@RequestBody SocialLoginRequest socialLoginRequest) {
         TokenResponse tokenResponse = authService.googleLogin(socialLoginRequest.token());
@@ -35,12 +38,14 @@ public class AuthController {
         return ReddyApiResponse.createResponse(tokenResponse, UserMessage.LOGIN_SUCCESS);
     }
 
+    @ReissueSpringDocs
     @PostMapping("/token")
     public ReddyApiResponse<TokenResponse> reissue(@AuthenticationPrincipal UserInfo user, @RequestBody ReissueRequest request) {
         TokenResponse tokenResponse = authService.reissue(user.getProvider(), user.getEmail(), request.refreshToken());
         return ReddyApiResponse.createResponse(tokenResponse, UserMessage.REISSUE_SUCCESS);
     }
 
+    @LogoutSpringDocs
     @DeleteMapping("/auth/user")
     public ReddyApiResponse<?> logout(@AuthenticationPrincipal UserInfo user) {
         authService.logout(user.getProvider(), user.getEmail());

@@ -30,7 +30,6 @@ public class UserEntity extends BaseTimeEntity {
     private Long id;
     private String name;
     private String email;
-    private String imageUrl;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "character_profile_id")
