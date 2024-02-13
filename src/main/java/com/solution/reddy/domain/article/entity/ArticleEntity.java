@@ -1,5 +1,6 @@
 package com.solution.reddy.domain.article.entity;
 
+import com.solution.reddy.domain.article.dto.response.ArticleTitleItems;
 import com.solution.reddy.domain.article.dto.response.ArticleTitleResponseDto;
 import com.solution.reddy.domain.article.dto.response.DetailArticleDto;
 import jakarta.persistence.Column;
@@ -25,6 +26,7 @@ public class ArticleEntity {
     Long id;
     String title;
     String contents;
+    String articleImageUrl;
 
     Long goodCount;
     Long sadCount;
@@ -33,9 +35,10 @@ public class ArticleEntity {
 
 
     @Builder
-    public ArticleEntity createArticleEntity(String title, String contents) {
+    public ArticleEntity createArticleEntity(String title, String contents, String articleImageUrl) {
         this.title = title;
         this.contents = contents;
+        this.articleImageUrl = articleImageUrl;
 
         this.goodCount = 0L;
         this.sadCount = 0L;
@@ -52,6 +55,13 @@ public class ArticleEntity {
                 .sadCount(this.sadCount)
                 .angryCount(this.angryCount)
                 .sosoCount(this.sosoCount)
+                .build();
+    }
+
+    public ArticleTitleItems toArtitleTitleItems() {
+        return ArticleTitleItems.builder()
+                .id(this.id)
+                .title(this.title)
                 .build();
     }
 }
