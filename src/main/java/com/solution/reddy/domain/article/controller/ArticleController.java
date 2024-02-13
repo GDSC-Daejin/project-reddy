@@ -28,6 +28,6 @@ public class ArticleController {
     @GetMapping("/article")
     public ReddyApiResponse<ArticleTitleResponseDto> getArticleTitle(@PageableDefault @Parameter(hidden = true) Pageable pageable) {
         ArticleTitleResponseDto article = articleService.getArticleTitle(pageable);
-        return ReddyApiResponse.createResponse(article, ArticleMessage.GETARTICLE_TITLE_SUCCESS);
+        return ReddyApiResponse.createResponse(article, ArticleMessage.GET_ARTICLE_TITLE_SUCCESS);
     }
 }
