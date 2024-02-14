@@ -1,7 +1,6 @@
 package com.solution.reddy.domain.article.entity;
 
 import com.solution.reddy.domain.article.dto.response.ArticleTitleItems;
-import com.solution.reddy.domain.article.dto.response.ArticleTitleResponseDto;
 import com.solution.reddy.domain.article.dto.response.DetailArticleDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,15 +22,15 @@ public class ArticleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "article_id")
-    Long id;
-    String title;
-    String contents;
-    String articleImageUrl;
+    private Long id;
+    private String title;
+    private String contents;
+    private String articleImageUrl;
 
-    Long goodCount;
-    Long sadCount;
-    Long angryCount;
-    Long sosoCount;
+    private Long goodCount;
+    private Long sadCount;
+    private Long angryCount;
+    private Long sosoCount;
 
 
     @Builder
