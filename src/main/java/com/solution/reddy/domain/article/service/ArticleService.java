@@ -1,6 +1,6 @@
 package com.solution.reddy.domain.article.service;
 
-import com.solution.reddy.domain.article.controller.repository.ArticleRepository;
+import com.solution.reddy.domain.article.repository.ArticleRepository;
 import com.solution.reddy.domain.article.dto.response.ArticleTitleItems;
 import com.solution.reddy.domain.article.dto.response.ArticleTitleResponseDto;
 import com.solution.reddy.domain.article.dto.response.DetailArticleDto;
@@ -31,6 +31,9 @@ public class ArticleService {
         Page<ArticleTitleItems> articleTitlePage = articleRepository.findAll(pageable)
                                                                     .map(ArticleEntity::toArtitleTitleItems);
         PageResponse pageResponse = new PageResponse(articleTitlePage);
+        if (articleTitlePage.isEmpty()) {
+            throw new ApiException(ArticleMessage.ARTICLE_IS_EMPTY);
+        }
         return new ArticleTitleResponseDto(articleTitlePage.toList(), pageResponse);
     }
 }

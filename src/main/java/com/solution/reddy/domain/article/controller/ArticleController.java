@@ -1,5 +1,7 @@
 package com.solution.reddy.domain.article.controller;
 
+import com.solution.reddy.domain.article.controller.springdocs.GetArticleDetailSpringDocs;
+import com.solution.reddy.domain.article.controller.springdocs.GetArticleTitleSpringDocs;
 import com.solution.reddy.domain.article.dto.response.ArticleTitleResponseDto;
 import com.solution.reddy.domain.article.dto.response.DetailArticleDto;
 import com.solution.reddy.domain.article.service.ArticleService;
@@ -19,12 +21,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequiredArgsConstructor
 public class ArticleController {
     private final ArticleService articleService;
+
+    @GetArticleDetailSpringDocs
     @GetMapping("/article/{id}")
     public ReddyApiResponse<DetailArticleDto> getArticleDetail(@PathVariable Long id) {
         DetailArticleDto article = articleService.getDetailArticle(id);
         return ReddyApiResponse.createResponse(article, ArticleMessage.GET_ARTICLE_DETAIL_SUCCESS);
     }
 
+    @GetArticleTitleSpringDocs
     @GetMapping("/article")
     public ReddyApiResponse<ArticleTitleResponseDto> getArticleTitle(@PageableDefault @Parameter(hidden = true) Pageable pageable) {
         ArticleTitleResponseDto article = articleService.getArticleTitle(pageable);

@@ -1,4 +1,4 @@
-package com.solution.reddy.domain.article.controller.repository;
+package com.solution.reddy.domain.article.repository;
 
 import com.solution.reddy.domain.article.entity.ArticleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
