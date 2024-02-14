@@ -9,6 +9,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +23,9 @@ public class SpringDocsConfig {
     private static final Contact API_CONTACT = new Contact()
             .name("Peony")
             .email("j51677767@gmail.com");
+
+    @Value("${server.url}")
+    private String serverUrl;
 
     @Bean
     public OpenAPI ReddyApi() {
@@ -45,8 +49,11 @@ public class SpringDocsConfig {
         Server localServer = new Server();
         localServer.setUrl("http://localhost:8080");
 
+        Server server = new Server();
+        server.setUrl(serverUrl);
+
         return new OpenAPI()
-                .servers(List.of(localServer))
+                .servers(List.of(localServer, server))
                 // Security 인증 컴포넌트 설정
                 .components(new Components().addSecuritySchemes("JWT", bearerAuth))
                 // API 마다 Security 인증 컴포넌트 설정
