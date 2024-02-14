@@ -4,7 +4,7 @@ import com.solution.reddy.global.dto.PageResponse;
 import java.util.List;
 
 public record ArticleTitleResponseDto (
-        List<ArticleTitleItems> restaurants,
+        List<ArticleTitleItems> articles,
         PageResponse page
 )
 { }

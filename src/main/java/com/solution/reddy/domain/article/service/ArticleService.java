@@ -29,7 +29,7 @@ public class ArticleService {
 
     public ArticleTitleResponseDto getArticleTitle(Pageable pageable) {
         Page<ArticleTitleItems> articleTitlePage = articleRepository.findAll(pageable)
-                                                                    .map(ArticleEntity::toArtitleTitleItems);
+                                                                    .map(ArticleEntity::toArticleTitleItems);
         PageResponse pageResponse = new PageResponse(articleTitlePage);
         if (articleTitlePage.isEmpty()) {
             throw new ApiException(ArticleMessage.ARTICLE_IS_EMPTY);

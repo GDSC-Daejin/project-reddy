@@ -57,7 +57,7 @@ public class ArticleEntity {
                 .build();
     }
 
-    public ArticleTitleItems toArtitleTitleItems() {
+    public ArticleTitleItems toArticleTitleItems() {
         return ArticleTitleItems.builder()
                 .id(this.id)
                 .title(this.title)
