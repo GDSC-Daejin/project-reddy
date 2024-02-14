@@ -32,8 +32,8 @@ public class UserEntity extends BaseTimeEntity {
     private String email;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "character_profile_id")
-    private CharacterProfile characterProfileId;
+    @JoinColumn(name = "tb_character_profile_id")
+    private CharacterProfileEntity characterProfileId;
 
     @Enumerated(EnumType.STRING)
     private SocialType socialType; // KAKAO, NAVER, GOOGLE
