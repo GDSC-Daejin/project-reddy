@@ -10,12 +10,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 @Getter
 @Builder
 @Entity @Table(name = "tb_category")
 @NoArgsConstructor
 @AllArgsConstructor
+@BatchSize(size = 100)
 public class CategoryEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

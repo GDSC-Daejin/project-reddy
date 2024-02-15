@@ -5,7 +5,7 @@ import com.solution.reddy.domain.separateCollection.entity.SeparateEntity;
 import lombok.Builder;
 
 @Builder
-public record SeparatePostRequestDto(
+public record SeparatePostRequest(
     String title,
     String imageUrl,
     String description,

@@ -1,6 +1,7 @@
 package com.solution.reddy.domain.separateCollection.entity;
 
 import com.solution.reddy.domain.category.entity.CategoryEntity;
+import com.solution.reddy.domain.separateCollection.dto.response.SeparatePostResponseItem;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -31,4 +32,14 @@ public class SeparateEntity {
     private String imageUrl;
     private String title;
     private String description;
+
+    public SeparatePostResponseItem toSeparatePostResponseItem() {
+        return SeparatePostResponseItem.builder()
+                .category(this.category.toCategoryResponseDto())
+                .imageUrl(this.imageUrl)
+                .title(this.title)
+                .description(this.description)
+                .build();
+    }
+
 }
