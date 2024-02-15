@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SeparateRepository extends JpaRepository<SeparateEntity, Long> {
 
-    Optional<List<SeparatePostResponseDto>> findByCategory(CategoryEntity category);
+    Optional<List<SeparatePostResponseDto>> findAllByCategory(CategoryEntity category);
 }

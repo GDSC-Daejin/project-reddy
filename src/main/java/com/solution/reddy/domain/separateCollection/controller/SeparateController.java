@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "분리수거 정보 게시물 관련 컨트롤러")
 @FirstVersionRestController
@@ -26,7 +27,7 @@ public class SeparateController {
     }
 
     @GetMapping("/separate")
-    public ReddyApiResponse<List<SeparatePostResponseDto>> getSeparateByCategory(@RequestBody Long category) {
+    public ReddyApiResponse<List<SeparatePostResponseDto>> getSeparateByCategory(@RequestParam Long category) {
         List<SeparatePostResponseDto> list = separateService.getSeparateByCategory(category);
         return ReddyApiResponse.createResponse(list, SeparateMessage.POST_GET_SUCCESS);
     }
