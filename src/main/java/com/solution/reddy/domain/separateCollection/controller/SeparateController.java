@@ -1,11 +1,13 @@
 package com.solution.reddy.domain.separateCollection.controller;
 
 import com.solution.reddy.domain.separateCollection.dto.SeparatePostRequestDto;
+import com.solution.reddy.domain.separateCollection.dto.response.SeparatePostResponseDto;
 import com.solution.reddy.domain.separateCollection.service.SeparateService;
 import com.solution.reddy.global.controller.FirstVersionRestController;
 import com.solution.reddy.global.dto.ReddyApiResponse;
 import com.solution.reddy.global.message.SeparateMessage;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,4 +25,9 @@ public class SeparateController {
         return ReddyApiResponse.createResponse(responseId, SeparateMessage.POST_CREATE_SUCCESS);
     }
 
+    @GetMapping("/separate")
+    public ReddyApiResponse<List<SeparatePostResponseDto>> getSeparateByCategory(@RequestBody Long category) {
+        List<SeparatePostResponseDto> list = separateService.getSeparateByCategory(category);
+        return ReddyApiResponse.createResponse(list, SeparateMessage.POST_GET_SUCCESS);
+    }
 }

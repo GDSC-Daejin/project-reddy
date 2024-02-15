@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum CategoryMessage implements ResponseMessage{
     CATEGORY_FIND_ALL_SUCCESS("카테고리 전체 조회에 성공했습니다.", HttpStatus.OK),
-    CATECORY_CREATE_SUCCESS("카테고리 등록에 성공했습니다.", HttpStatus.CREATED);
+    CATECORY_CREATE_SUCCESS("카테고리 등록에 성공했습니다.", HttpStatus.CREATED),
+    CATEGORY_NOT_FOUND("카테고리가 없습니다.", HttpStatus.NOT_FOUND);
 
     private final String message;
     private final HttpStatus status;
