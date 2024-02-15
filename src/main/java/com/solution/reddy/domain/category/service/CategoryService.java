@@ -25,4 +25,8 @@ public class CategoryService {
                 .save(categoryRequestDto.makeCategoryEntity())
                 .toCategoryResponseDto();
     }
+
+    public CategoryEntity findByCategoryName(String categoryName) {
+        return categoryRepository.findByCategoryName(categoryName);
+    }
 }
