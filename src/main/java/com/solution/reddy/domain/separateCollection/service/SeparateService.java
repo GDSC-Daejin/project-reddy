@@ -22,7 +22,6 @@ public class SeparateService {
     private final SeparateRepository separateRepository;
     private final CategoryService categoryService;
 
-
     public Long createSeparatePost(SeparatePostRequest requestDto) {
         CategoryEntity category = categoryService.findByCategoryName(requestDto.category());
         SeparateEntity entity = requestDto.toSeparateEntity(category);
@@ -52,6 +51,4 @@ public class SeparateService {
         PageResponse pageResponse = new PageResponse(SeparatePostPage);
         return new SeparatePostResponsePage(SeparatePostPage.toList(), pageResponse);
     }
-
-
 }

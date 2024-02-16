@@ -5,6 +5,6 @@ import java.util.List;
 
 public record SeparatePostResponsePage(
         List<SeparatePostResponseItem> separatePosts,
-        PageResponse pageable
+        PageResponse page
 ) {
 }
