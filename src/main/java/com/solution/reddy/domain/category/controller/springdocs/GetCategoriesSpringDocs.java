@@ -1,4 +1,4 @@
-package com.solution.reddy.domain.category.controller.SpringDocs;
+package com.solution.reddy.domain.category.controller.springdocs;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
