@@ -16,8 +16,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-@Entity
-@Builder
+@Entity @Builder
 @Table(name = "tb_result_post")
 @AllArgsConstructor
 public class ResultPostEntity {
