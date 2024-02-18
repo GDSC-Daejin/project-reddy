@@ -35,9 +35,10 @@ public class AuthService {
     private final RedisService redisService;
     private final UserRepository userRepository;
 
+    @Transactional
     public TokenResponse googleLogin(String idToken) {
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
-                .setAudience(Collections.singleton(googleClientId))
+                .setAudience(List.of(googleClientId))
                 .build();
         try {
             GoogleIdToken googleIdToken = verifier.verify(idToken);
