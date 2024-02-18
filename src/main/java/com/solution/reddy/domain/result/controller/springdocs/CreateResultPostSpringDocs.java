@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Operation(summary = "결과 저장 API", description = "결과 저장을 처리하는 API 입니다.")
+@Operation(summary = "결과 저장 API", description = "결과 저장을 처리하는 API 입니다. groupId가 없다면, 0을 넣어주세요 꼭 !! 꼭 !")
 @ApiResponses(value = {
         @ApiResponse(responseCode = "201", useReturnTypeSchema = true),
         @ApiResponse(
