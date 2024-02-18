@@ -1,4 +1,4 @@
-package com.solution.reddy.domain.category.controller.SpringDocs;
+package com.solution.reddy.domain.separateCollection.controller.springdocs;
 
 import com.solution.reddy.global.controller.springdocs.ServerErrorException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Operation(summary = "카테고리 생성 API", description = "카테고리 생성을 처리하는 API 입니다.")
+@Operation(summary = "분리수거 게시물 생성 API", description = "분리수거 게시물 생성을 처리하는 API 입니다.")
 @ApiResponses(value = {
         @ApiResponse(responseCode = "201", useReturnTypeSchema = true),
         @ApiResponse(
@@ -21,5 +21,5 @@ import java.lang.annotation.Target;
                 description = "알수 없는 서버 에러 발생",
                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServerErrorException.class)))
 })
-public @interface CreateCategorySpringDocs {
+public @interface CreateSeparatePostSpringDocs {
 }

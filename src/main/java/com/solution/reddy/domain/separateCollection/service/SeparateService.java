@@ -40,6 +40,9 @@ public class SeparateService {
     public SeparatePostResponsePage searchSeparatePost(String keyword, Pageable pageable) {
         Page<SeparatePostResponseItem> separatePostPage = separateRepository.searchSeparatePost(keyword, pageable)
                 .map(SeparateEntity::toSeparatePostResponseItem);
+        if(separatePostPage.isEmpty()) {
+            throw new ApiException(SeparateMessage.POST_NO_CONTENTS);
+        }
         return createSeparatePostResponsePageDto(separatePostPage);
     }
 

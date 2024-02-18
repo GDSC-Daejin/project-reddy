@@ -1,5 +1,8 @@
 package com.solution.reddy.domain.separateCollection.controller;
 
+import com.solution.reddy.domain.separateCollection.controller.springdocs.CreateSeparatePostSpringDocs;
+import com.solution.reddy.domain.separateCollection.controller.springdocs.GetSeparatePostSpringDocs;
+import com.solution.reddy.domain.separateCollection.controller.springdocs.SearchSeparatePostSpringDocs;
 import com.solution.reddy.domain.separateCollection.dto.SeparatePostRequest;
 import com.solution.reddy.domain.separateCollection.dto.SeparatePostSearchRequest;
 import com.solution.reddy.domain.separateCollection.dto.response.SeparatePostResponsePage;
@@ -24,12 +27,14 @@ public class SeparateController {
     private final SeparateService separateService;
 
     @PostMapping("/separate")
+    @CreateSeparatePostSpringDocs
     public ReddyApiResponse<Long> createSeparatePost(@RequestBody SeparatePostRequest requestDto) {
         Long responseId = separateService.createSeparatePost(requestDto);
         return ReddyApiResponse.createResponse(responseId, SeparateMessage.POST_CREATE_SUCCESS);
     }
 
     @GetMapping("/separate")
+    @GetSeparatePostSpringDocs
     public ReddyApiResponse<SeparatePostResponsePage> getSeparateByCategory(@RequestParam Long category,
                                                                             @PageableDefault @Parameter(hidden = true) Pageable pageable) {
         SeparatePostResponsePage response = separateService.getSeparateByCategory(category, pageable);
@@ -37,6 +42,7 @@ public class SeparateController {
     }
 
     @PostMapping("/separate/search")
+    @SearchSeparatePostSpringDocs
     public ReddyApiResponse<SeparatePostResponsePage> searchSeparatePost(@RequestBody SeparatePostSearchRequest request,
                                                                          @PageableDefault @Parameter(hidden = true) Pageable pageable) {
         SeparatePostResponsePage response = separateService.searchSeparatePost(request.keyword(), pageable);
