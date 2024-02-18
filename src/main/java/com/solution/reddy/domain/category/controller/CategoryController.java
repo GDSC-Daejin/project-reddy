@@ -1,7 +1,7 @@
 package com.solution.reddy.domain.category.controller;
 
-import com.solution.reddy.domain.category.controller.SpringDocs.CreateCategorySpringDocs;
-import com.solution.reddy.domain.category.controller.SpringDocs.GetCategoriesSpringDocs;
+import com.solution.reddy.domain.category.controller.springdocs.CreateCategorySpringDocs;
+import com.solution.reddy.domain.category.controller.springdocs.GetCategoriesSpringDocs;
 import com.solution.reddy.domain.category.dto.CategoryRequestDto;
 import com.solution.reddy.domain.category.dto.CategoryResponseDto;
 import com.solution.reddy.domain.category.service.CategoryService;

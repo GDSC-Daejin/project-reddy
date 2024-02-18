@@ -1,6 +1,6 @@
-package com.solution.reddy.domain.user.controller.springdocs;
+package com.solution.reddy.domain.separateCollection.controller.springdocs;
 
-import com.solution.reddy.domain.user.controller.springdocs.model.AuthInvalidTokenException;
+import com.solution.reddy.domain.separateCollection.controller.springdocs.model.SeparatePostNoContents;
 import com.solution.reddy.global.controller.springdocs.ServerErrorException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,15 +14,18 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Operation(summary = "구글 로그인 API", description = "구글 로그인 및 회원가입을 처리하는 API 입니다.")
+@Operation(summary = "분리수거 게시물 검색 API", description = "분리수거 게시물 검색 API 입니다. 제목, 내용 통합 검색입니다.")
 @ApiResponses(value = {
         @ApiResponse(responseCode = "200", useReturnTypeSchema = true),
-        @ApiResponse(responseCode = "401", description = "ID TOKEN가 유효하지 않음",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthInvalidTokenException.class))),
+        @ApiResponse(responseCode = "204",
+                description = "게시물이 없습니다",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = SeparatePostNoContents.class))
+        ),
         @ApiResponse(
                 responseCode = "500",
                 description = "알수 없는 서버 에러 발생",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServerErrorException.class))),
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServerErrorException.class))
+        )
 })
-public @interface GoogleLoginSpringDocs {
+public @interface SearchSeparatePostSpringDocs {
 }
