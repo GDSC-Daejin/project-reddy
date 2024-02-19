@@ -1,5 +1,6 @@
 package com.solution.reddy.global.api;
 
+import com.solution.reddy.global.exception.RunModelErrorDecoder;
 import feign.codec.ErrorDecoder;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,7 @@ public interface AiModelApi {
     class FeignConfig {
         @Bean
         ErrorDecoder errorDecoder() {
-            return new SearchErrorDecoder();
+            return new RunModelErrorDecoder();
         }
     }
 }
