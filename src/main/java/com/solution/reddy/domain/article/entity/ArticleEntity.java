@@ -23,37 +23,43 @@ public class ArticleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "article_id")
     private Long id;
+    private String date;
     private String title;
+    private String link;
+    @Column(length = 50000)
     private String contents;
     private String articleImageUrl;
 
-    private Long goodCount;
-    private Long sadCount;
-    private Long angryCount;
     private Long sosoCount;
+    private Long analysisCount;
+    private Long goodCount;
+    private Long empathyCount;
+
 
 
     @Builder
-    public ArticleEntity createArticleEntity(String title, String contents, String articleImageUrl) {
+    public ArticleEntity (String date, String title, String link, String contents, String articleImageUrl) {
+        this.date = date;
         this.title = title;
+        this.link = link;
         this.contents = contents;
         this.articleImageUrl = articleImageUrl;
 
-        this.goodCount = 0L;
-        this.sadCount = 0L;
-        this.angryCount = 0L;
         this.sosoCount = 0L;
-        return this;
+        this.analysisCount = 0L;
+        this.goodCount = 0L;
+        this.empathyCount = 0L;
     }
 
     public DetailArticleDto toDetailArticleDto() {
         return DetailArticleDto.builder()
+                .date(this.date)
                 .title(this.title)
                 .contents(this.contents)
-                .goodCount(this.goodCount)
-                .sadCount(this.sadCount)
-                .angryCount(this.angryCount)
                 .sosoCount(this.sosoCount)
+                .analysisCount(this.analysisCount)
+                .goodCount(this.goodCount)
+                .empathyCount(this.empathyCount)
                 .build();
     }
 

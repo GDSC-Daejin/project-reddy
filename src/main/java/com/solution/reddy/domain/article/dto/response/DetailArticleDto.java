@@ -4,11 +4,14 @@ import lombok.Builder;
 
 @Builder
 public record DetailArticleDto(
+    String date,
     String title,
+    String link,
     String contents,
+    String articleImageUrl,
+    Long sosoCount,
+    Long analysisCount,
     Long goodCount,
-    Long sadCount,
-    Long angryCount,
-    Long sosoCount
+    Long empathyCount
 )
 { }
