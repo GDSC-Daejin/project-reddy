@@ -61,6 +61,7 @@ public BCryptPasswordEncoder encoder() {
                 //권한 설정
                 .authorizeHttpRequests(httpRequest ->
                         httpRequest.requestMatchers(HttpMethod.DELETE, "/**/user").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/**/article/emotion").authenticated()
                                 .anyRequest().permitAll())
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

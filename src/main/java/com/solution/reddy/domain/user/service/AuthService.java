@@ -56,7 +56,9 @@ public class AuthService {
     }
 
     private void saveUser(OAuth2UserInfo userInfo) {
-        userRepository.save(userInfo.createUserEntity());
+        if ( userRepository.findByEmail(userInfo.getEmail()).isEmpty()) {
+            userRepository.save(userInfo.createUserEntity());
+        };
     }
 
     @Transactional
