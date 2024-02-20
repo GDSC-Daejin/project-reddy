@@ -1,5 +1,7 @@
 package com.solution.reddy.domain.result.service;
 
+import com.solution.reddy.domain.result.dto.AIResultRequest;
+import com.solution.reddy.domain.result.dto.AIResultResponse;
 import com.solution.reddy.domain.result.dto.SaveCheckResultRequest;
 import com.solution.reddy.domain.result.entity.ResultEntity;
 import com.solution.reddy.domain.result.entity.ResultGroupEntity;
@@ -60,5 +62,14 @@ public class ResultService {
             throw new ApiException(UserMessage.USER_NOT_FOUND);
         }
         return user.get();
+    }
+
+    public AIResultResponse checkImageWithAI(AIResultRequest request) {
+
+        return AIResultResponse.builder()
+                .id(1L)
+                .title("title")
+                .description("description")
+                .build();
     }
 }
