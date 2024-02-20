@@ -1,5 +1,11 @@
 package com.solution.reddy.domain.article.entity;
 
+import static com.solution.reddy.domain.article.dto.request.ArticleEmotion.ANALYSIS;
+import static com.solution.reddy.domain.article.dto.request.ArticleEmotion.EMPATHY;
+import static com.solution.reddy.domain.article.dto.request.ArticleEmotion.GOOD;
+import static com.solution.reddy.domain.article.dto.request.ArticleEmotion.SOSO;
+
+import com.solution.reddy.domain.article.dto.request.ArticleEmotion;
 import com.solution.reddy.domain.article.dto.response.ArticleTitleItems;
 import com.solution.reddy.domain.article.dto.response.DetailArticleDto;
 import jakarta.persistence.Column;
@@ -35,6 +41,17 @@ public class ArticleEntity {
     private Long goodCount;
     private Long empathyCount;
 
+    public void updateEmotionCount(ArticleEmotion emotion, Long count) {
+        if (emotion.equals(SOSO)) {
+            this.sosoCount+= count;
+        } else if (emotion.equals(ANALYSIS)) {
+            this.analysisCount+= count;
+        } else if (emotion.equals(GOOD)) {
+            this.goodCount+= count;
+        } else if (emotion.equals(EMPATHY)) {
+            this.empathyCount+= count;
+        }
+    }
 
 
     @Builder
