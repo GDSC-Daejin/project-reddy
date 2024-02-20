@@ -68,15 +68,15 @@ public class ArticleEntity {
         this.empathyCount = 0L;
     }
 
-    public DetailArticleDto toDetailArticleDto() {
+    public DetailArticleDto toDetailArticleDto(ArticleEmotionEntity articleEmotionEntity) {
         return DetailArticleDto.builder()
                 .date(this.date)
                 .title(this.title)
                 .contents(this.contents)
-                .sosoCount(this.sosoCount)
-                .analysisCount(this.analysisCount)
-                .goodCount(this.goodCount)
-                .empathyCount(this.empathyCount)
+                .isSosoEmotion(articleEmotionEntity.getIsSosoEmotion())
+                .isAnalysisEmotion(articleEmotionEntity.getIsAnalysisEmotion())
+                .isGoodEmotion(articleEmotionEntity.getIsGoodEmotion())
+                .isEmpathyEmotion(articleEmotionEntity.getIsEmpathyEmotion())
                 .build();
     }
 

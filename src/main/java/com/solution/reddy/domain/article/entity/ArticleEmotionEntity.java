@@ -1,5 +1,6 @@
 package com.solution.reddy.domain.article.entity;
 
+import com.solution.reddy.domain.article.dto.response.ArticleEmotionDto;
 import com.solution.reddy.domain.user.entity.UserEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -59,5 +60,14 @@ public class ArticleEmotionEntity {
 
     public void changeEmpathyEmotion() {
         this.isEmpathyEmotion = !this.isEmpathyEmotion;
+    }
+
+    public ArticleEmotionDto toArticleEmotionDto() {
+        return ArticleEmotionDto.builder()
+                .isSosoEmotion(this.isSosoEmotion)
+                .isAnalysisEmotion(this.isAnalysisEmotion)
+                .isGoodEmotion(this.isGoodEmotion)
+                .isEmpathyEmotion(this.isEmpathyEmotion)
+                .build();
     }
 }
