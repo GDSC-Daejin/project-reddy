@@ -5,6 +5,7 @@ import lombok.Builder;
 @Builder
 public record ArticleTitleItems (
         Long id,
-        String title
+        String title,
+        String imageUrl
 )
 { }
