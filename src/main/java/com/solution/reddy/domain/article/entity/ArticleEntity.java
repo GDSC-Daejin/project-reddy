@@ -84,6 +84,7 @@ public class ArticleEntity {
         return ArticleTitleItems.builder()
                 .id(this.id)
                 .title(this.title)
+                .imageUrl(this.articleImageUrl)
                 .build();
     }
 }
