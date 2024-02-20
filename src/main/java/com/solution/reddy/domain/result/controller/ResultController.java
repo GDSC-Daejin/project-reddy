@@ -22,8 +22,8 @@ public class ResultController {
     private final ResultService resultService;
     @PostMapping("/check")
     public ReddyApiResponse<AIResultResponse> checkImageWithAI(@RequestBody AIResultRequest request) {
-        resultService.checkImageWithAI(request);
-        return ReddyApiResponse.createResponse(null, ResultMessage.RESULT_GET_SUCCESS);
+        AIResultResponse resultResponse = resultService.checkImageWithAI(request);
+        return ReddyApiResponse.createResponse(resultResponse, ResultMessage.RESULT_GET_SUCCESS);
     }
 
     @PostMapping("/check/save")
