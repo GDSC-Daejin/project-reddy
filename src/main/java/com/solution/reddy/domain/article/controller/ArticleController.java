@@ -5,6 +5,7 @@ import com.solution.reddy.domain.article.controller.springdocs.GetArticleDetailS
 import com.solution.reddy.domain.article.controller.springdocs.GetArticleTitleSpringDocs;
 import com.solution.reddy.domain.article.controller.springdocs.GetTodaysArticleTitleSpringDocs;
 import com.solution.reddy.domain.article.dto.request.ArticleEmotionRequest;
+import com.solution.reddy.domain.article.dto.response.ArticleEmotionDto;
 import com.solution.reddy.domain.article.dto.response.ArticleTitleItems;
 import com.solution.reddy.domain.article.dto.response.ArticleTitleResponseDto;
 import com.solution.reddy.domain.article.dto.response.DetailArticleDto;
@@ -37,8 +38,8 @@ public class ArticleController {
 
     @GetArticleDetailSpringDocs
     @GetMapping("/article/{id}")
-    public ReddyApiResponse<DetailArticleDto> getArticleDetail(@PathVariable Long id) {
-        DetailArticleDto article = articleService.getDetailArticle(id);
+    public ReddyApiResponse<DetailArticleDto> getArticleDetail(@PathVariable Long id, @AuthenticationPrincipal UserInfo user) {
+        DetailArticleDto article = articleService.getDetailArticle(id, user.getEmail());
         return ReddyApiResponse.createResponse(article, ArticleMessage.GET_ARTICLE_DETAIL_SUCCESS);
     }
 
@@ -64,9 +65,9 @@ public class ArticleController {
 
     @PostMapping("/article/emotion")
     @ClickArticleEmotionSpringDocs
-    public ReddyApiResponse<?> clickArticleEmotion(@RequestBody ArticleEmotionRequest request,
+    public ReddyApiResponse<ArticleEmotionDto> clickArticleEmotion(@RequestBody ArticleEmotionRequest request,
                                                    @AuthenticationPrincipal UserInfo user) {
-        articleService.clickArticleEmotion(request.articleId(), request.emotion(), user.getEmail());
-        return ReddyApiResponse.createResponse(null, ArticleMessage.ARTICLE_EMOTION_POST_SUCCESS);
+        ArticleEmotionDto response = articleService.clickArticleEmotion(request.articleId(), request.emotion(), user.getEmail());
+        return ReddyApiResponse.createResponse(response, ArticleMessage.ARTICLE_EMOTION_POST_SUCCESS);
     }
 }

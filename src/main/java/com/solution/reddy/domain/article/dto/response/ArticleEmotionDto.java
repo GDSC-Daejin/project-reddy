@@ -3,15 +3,10 @@ package com.solution.reddy.domain.article.dto.response;
 import lombok.Builder;
 
 @Builder
-public record DetailArticleDto(
-    String date,
-    String title,
-    String link,
-    String contents,
-    String articleImageUrl,
+public record ArticleEmotionDto(
     Boolean isSosoEmotion,
     Boolean isAnalysisEmotion,
     Boolean isGoodEmotion,
     Boolean isEmpathyEmotion
-)
-{ }
+) {
+}

@@ -6,6 +6,7 @@ import static com.solution.reddy.domain.article.dto.request.ArticleEmotion.GOOD;
 import static com.solution.reddy.domain.article.dto.request.ArticleEmotion.SOSO;
 
 import com.solution.reddy.domain.article.dto.request.ArticleEmotion;
+import com.solution.reddy.domain.article.dto.response.ArticleEmotionDto;
 import com.solution.reddy.domain.article.entity.ArticleEmotionEntity;
 import com.solution.reddy.domain.article.repository.ArticleEmotionRepository;
 import com.solution.reddy.domain.article.repository.ArticleRepository;
@@ -42,12 +43,25 @@ public class ArticleService {
     private final ArticleEmotionRepository articleEmotionRepository;
     private final UserRepository userRepository;
 
-    public DetailArticleDto getDetailArticle(Long id) {
+    public DetailArticleDto getDetailArticle(Long id, String email) {
         Optional<ArticleEntity> article = articleRepository.findById(id);
         if(article.isEmpty()) {
             throw new ApiException(ArticleMessage.ARTICLE_NOT_FOUD);
         }
-        return article.get().toDetailArticleDto();
+
+        Optional<UserEntity> user = userRepository.findByEmail(email);
+        if(user.isEmpty()) {
+            throw new ApiException(UserMessage.USER_NOT_FOUND);
+        }
+
+        Optional<ArticleEmotionEntity> articleEmotion = articleEmotionRepository.findByArticleIdAndUserId(id, user.get().getId());
+        if(articleEmotion.isEmpty()) {
+            ArticleEmotionEntity articleEmotionEntity = new ArticleEmotionEntity(article.get(), user.get());
+            articleEmotionRepository.save(articleEmotionEntity);
+            articleEmotion = Optional.of(articleEmotionEntity);
+        }
+
+        return article.get().toDetailArticleDto(articleEmotion.get());
     }
 
     public ArticleTitleResponseDto getArticleTitle(Pageable pageable) {
@@ -99,26 +113,27 @@ public class ArticleService {
         }
     }
 
-    public void clickArticleEmotion(Long id, ArticleEmotion emotion, String email) {
+    public ArticleEmotionDto clickArticleEmotion(Long id, ArticleEmotion emotion, String email) {
         Optional<UserEntity> user = userRepository.findByEmail(email);
-        if(user.isEmpty()) {
+        if (user.isEmpty()) {
             throw new ApiException(UserMessage.USER_NOT_FOUND);
         }
 
         Optional<ArticleEntity> article = articleRepository.findById(id);
-        if(article.isEmpty()) {
+        if (article.isEmpty()) {
             throw new ApiException(ArticleMessage.ARTICLE_NOT_FOUD);
         }
 
         Optional<ArticleEmotionEntity> articleEmotion = articleEmotionRepository.findByArticleId(id);
-        if(articleEmotion.isEmpty()) {
+        if (articleEmotion.isEmpty()) {
             ArticleEmotionEntity newArticleEmotion = new ArticleEmotionEntity(article.get(), user.get());
             clickEmotion(newArticleEmotion, emotion, article.get());
             articleEmotionRepository.save(newArticleEmotion);
-            return;
+            return newArticleEmotion.toArticleEmotionDto();
         }
 
         clickEmotion(articleEmotion.get(), emotion, article.get());
+        return articleEmotion.get().toArticleEmotionDto();
     }
 
     private void clickEmotion(ArticleEmotionEntity articleEmotionEntity, ArticleEmotion emotion, ArticleEntity targetArticle) {

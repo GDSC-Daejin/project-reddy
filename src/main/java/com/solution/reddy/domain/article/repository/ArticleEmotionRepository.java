@@ -8,4 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface ArticleEmotionRepository extends JpaRepository<ArticleEmotionEntity, Long> {
     @Query("SELECT a FROM ArticleEmotionEntity a WHERE a.article.id = :id")
     Optional<ArticleEmotionEntity> findByArticleId(Long id);
+
+    @Query("SELECT a FROM ArticleEmotionEntity a WHERE a.article.id = :articleId AND a.user.id = :userId")
+    Optional<ArticleEmotionEntity> findByArticleIdAndUserId(Long articleId, Long userId);
 }
