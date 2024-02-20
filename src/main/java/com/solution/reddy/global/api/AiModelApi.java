@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(value = "reddy", url = "${feign.svc1.name.url}",configuration = AiModelApi.FeignConfig.class)
 public interface AiModelApi {
 
-    @PostMapping(value = "/api/v1/ai-models", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/predict", produces = MediaType.APPLICATION_JSON_VALUE)
     void runAiModel(
             @RequestBody String imageUrl
     );
