@@ -15,7 +15,8 @@ public enum ArticleMessage implements ResponseMessage{
     ARTICLE_POST_FAIL("기사 등록에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
     ARTICLE_EMOTION_POST_SUCCESS("이모지 누르기에 성공했습니다.", HttpStatus.OK),
     EMOTION_NOT_FOUND("이모지를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
-    CLICK_EMOTION_FAIL("이모지 누르기에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+    CLICK_EMOTION_FAIL("이모지 누르기에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    GET_TODAYS_ARTICLE_TITLE_SUCCESS("오늘의 기사 타이틀 조회를 성공했습니다.", HttpStatus.OK);
 
     private final String message;
     private final HttpStatus status;
