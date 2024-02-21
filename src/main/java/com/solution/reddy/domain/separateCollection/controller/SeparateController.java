@@ -45,8 +45,8 @@ public class SeparateController {
 
     @GetMapping("/separate/{id}")
     @GetSeparatePostDetailSpringDocs
-    public ReddyApiResponse<SeparatePostDetailDto> getSeparatePost(@RequestParam Long postId) {
-        SeparatePostDetailDto response = separateService.getSeparateById(postId);
+    public ReddyApiResponse<SeparatePostDetailDto> getSeparatePost(@RequestParam Long id) {
+        SeparatePostDetailDto response = separateService.getSeparateById(id);
         return ReddyApiResponse.createResponse(response, SeparateMessage.POST_GET_SUCCESS);
     }
 
