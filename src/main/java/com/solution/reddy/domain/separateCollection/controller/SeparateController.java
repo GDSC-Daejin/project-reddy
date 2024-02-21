@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,8 +46,8 @@ public class SeparateController {
 
     @GetMapping("/separate/{id}")
     @GetSeparatePostDetailSpringDocs
-    public ReddyApiResponse<SeparatePostDetailDto> getSeparatePost(@RequestParam Long postId) {
-        SeparatePostDetailDto response = separateService.getSeparateById(postId);
+    public ReddyApiResponse<SeparatePostDetailDto> getSeparatePost(@PathVariable Long id) {
+        SeparatePostDetailDto response = separateService.getSeparateById(id);
         return ReddyApiResponse.createResponse(response, SeparateMessage.POST_GET_SUCCESS);
     }
 
