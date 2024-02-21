@@ -1,5 +1,7 @@
 package com.solution.reddy.domain.result.entity;
 
+import com.solution.reddy.domain.result.dto.GetUserPostDetailResponseDto;
+import com.solution.reddy.domain.result.dto.GetUserPostResponseDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,4 +35,20 @@ public class ResultPostEntity {
     @JoinColumn(name = "tb_result_id")
     ResultEntity result;
     String imageUrl;
+
+    public GetUserPostResponseDto toGetUserPostResponseDto() {
+        return GetUserPostResponseDto.builder()
+                .resultPostId(this.id)
+                .resultTitle(this.result.getTitle())
+                .imageUrl(this.imageUrl)
+                .build();
+    }
+
+    public GetUserPostDetailResponseDto getUserPostDetailResponseDto() {
+        return GetUserPostDetailResponseDto.builder()
+                .imageUrl(this.imageUrl)
+                .resultTitle(this.result.getTitle())
+                .description(this.result.getDescription())
+                .build();
+    }
 }

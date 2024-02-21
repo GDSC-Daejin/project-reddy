@@ -2,6 +2,7 @@ package com.solution.reddy.domain.result.service;
 
 import com.solution.reddy.domain.result.dto.AIResultRequest;
 import com.solution.reddy.domain.result.dto.AIResultResponse;
+import com.solution.reddy.domain.result.dto.GetUserPostResponseDto;
 import com.solution.reddy.domain.result.dto.SaveCheckResultRequest;
 import com.solution.reddy.domain.result.entity.ResultEntity;
 import com.solution.reddy.domain.result.entity.ResultGroupEntity;
@@ -18,6 +19,7 @@ import com.solution.reddy.global.message.ResultGroupMessage;
 import com.solution.reddy.global.message.ResultMessage;
 import com.solution.reddy.global.message.UserMessage;
 import com.sun.jdi.LongValue;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -75,5 +77,19 @@ public class ResultService {
         return resultRepository.findById(resultId)
                 .map(ResultEntity::toAIResultResponse)
                 .orElseThrow(() -> new ApiException(ResultMessage.RESULT_NOT_FOUND));
+    }
+
+    public List<GetUserPostResponseDto> getResultPostByUser(String email) {
+        UserEntity user = findUserByEmail(email);
+
+        List<ResultGroupEntity> resultGroupEntities = resultGroupRepository.findAllByUser(user);
+
+        return resultGroupEntities.stream()
+                .map(resultGroupEntity ->
+                        resultPostRepository
+                                .findByGroupId(resultGroupEntity.getId())
+                                .toGetUserPostResponseDto()
+                )
+                .toList();
     }
 }

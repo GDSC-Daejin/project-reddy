@@ -3,6 +3,7 @@ package com.solution.reddy.domain.result.controller;
 import com.solution.reddy.domain.result.controller.springdocs.CreateResultPostSpringDocs;
 import com.solution.reddy.domain.result.dto.AIResultRequest;
 import com.solution.reddy.domain.result.dto.AIResultResponse;
+import com.solution.reddy.domain.result.dto.GetUserPostResponseDto;
 import com.solution.reddy.domain.result.dto.SaveCheckResultRequest;
 import com.solution.reddy.domain.result.service.ResultService;
 import com.solution.reddy.global.controller.FirstVersionRestController;
@@ -10,8 +11,10 @@ import com.solution.reddy.global.dto.ReddyApiResponse;
 import com.solution.reddy.global.jwt.dto.UserInfo;
 import com.solution.reddy.global.message.ResultMessage;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -32,5 +35,11 @@ public class ResultController {
                                               @AuthenticationPrincipal UserInfo user) {
         resultService.saveCheckResult(request, user.getEmail());
         return ReddyApiResponse.createResponse(null, ResultMessage.RESULT_SAVE_SUCCESS);
+    }
+
+    @GetMapping("/check")
+    public ReddyApiResponse<?> getResultPost(@AuthenticationPrincipal UserInfo user) {
+        List<GetUserPostResponseDto> response = resultService.getResultPostByUser(user.getEmail());
+        return ReddyApiResponse.createResponse(response, ResultMessage.RESULT_GET_SUCCESS);
     }
 }
