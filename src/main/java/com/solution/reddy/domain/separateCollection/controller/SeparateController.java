@@ -1,6 +1,7 @@
 package com.solution.reddy.domain.separateCollection.controller;
 
 import com.solution.reddy.domain.separateCollection.controller.springdocs.CreateSeparatePostSpringDocs;
+import com.solution.reddy.domain.separateCollection.controller.springdocs.GetSeparatePostDetailSpringDocs;
 import com.solution.reddy.domain.separateCollection.controller.springdocs.GetSeparatePostSpringDocs;
 import com.solution.reddy.domain.separateCollection.controller.springdocs.SearchSeparatePostSpringDocs;
 import com.solution.reddy.domain.separateCollection.dto.SeparatePostRequest;
