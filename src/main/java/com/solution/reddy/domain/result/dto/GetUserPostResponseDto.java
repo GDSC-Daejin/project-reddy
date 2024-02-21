@@ -4,7 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record GetUserPostResponseDto(
-        Long resultGroupId,
+        Long groupId,
         String resultTitle,
         String imageUrl
 ) {
