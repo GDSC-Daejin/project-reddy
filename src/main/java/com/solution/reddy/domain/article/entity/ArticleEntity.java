@@ -34,6 +34,7 @@ public class ArticleEntity {
     private String link;
     @Column(length = 50000)
     private String contents;
+    @Column(length = 5000)
     private String articleImageUrl;
 
     private Long sosoCount;
