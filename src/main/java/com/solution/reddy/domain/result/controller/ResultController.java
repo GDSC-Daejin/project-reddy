@@ -42,7 +42,7 @@ public class ResultController {
     }
 
     @GetMapping("/check")
-    public ReddyApiResponse<?> getResultPost(@AuthenticationPrincipal UserInfo user) {
+    public ReddyApiResponse<List<GetUserPostResponseDto>> getResultPost(@AuthenticationPrincipal UserInfo user) {
         List<GetUserPostResponseDto> response = resultService.getResultPostByUser(user.getEmail());
         return ReddyApiResponse.createResponse(response, ResultMessage.RESULT_GET_SUCCESS);
     }
