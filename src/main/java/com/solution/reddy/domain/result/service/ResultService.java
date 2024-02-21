@@ -2,6 +2,7 @@ package com.solution.reddy.domain.result.service;
 
 import com.solution.reddy.domain.result.dto.AIResultRequest;
 import com.solution.reddy.domain.result.dto.AIResultResponse;
+import com.solution.reddy.domain.result.dto.GetUserPostDetailResponseDto;
 import com.solution.reddy.domain.result.dto.GetUserPostResponseDto;
 import com.solution.reddy.domain.result.dto.SaveCheckResultRequest;
 import com.solution.reddy.domain.result.entity.ResultEntity;
@@ -91,5 +92,11 @@ public class ResultService {
                                 .toGetUserPostResponseDto()
                 )
                 .toList();
+    }
+
+    public GetUserPostDetailResponseDto getResultPostDetail(Long postId) {
+        return resultPostRepository.findById(postId)
+                .map(ResultPostEntity::getUserPostDetailResponseDto)
+                .orElseThrow(() -> new ApiException(ResultMessage.RESULT_POST_NOT_FOUND));
     }
 }
