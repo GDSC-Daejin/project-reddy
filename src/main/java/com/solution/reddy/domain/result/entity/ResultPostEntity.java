@@ -38,7 +38,7 @@ public class ResultPostEntity {
 
     public GetUserPostResponseDto toGetUserPostResponseDto() {
         return GetUserPostResponseDto.builder()
-                .resultPostId(this.id)
+                .resultGroupId(this.group.getId())
                 .resultTitle(this.result.getTitle())
                 .imageUrl(this.imageUrl)
                 .build();
