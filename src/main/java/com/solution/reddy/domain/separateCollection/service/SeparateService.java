@@ -12,6 +12,7 @@ import com.solution.reddy.global.dto.PageResponse;
 import com.solution.reddy.global.exception.ApiException;
 import com.solution.reddy.global.message.SeparateMessage;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,12 +43,18 @@ public class SeparateService {
         Page<SeparatePostResponseItem> separatePostPage = separateRepository.searchSeparatePost(keyword, pageable)
                 .map(SeparateEntity::toSeparatePostResponseItem);
         if(separatePostPage.isEmpty()) {
-            throw new ApiException(SeparateMessage.POST_NO_CONTENTS);
+            return createSeparatePostResponsePageDto(null);
         }
         return createSeparatePostResponsePageDto(separatePostPage);
     }
 
     private SeparatePostResponsePage createSeparatePostResponsePageDto(Page<SeparatePostResponseItem> SeparatePostPage) {
+        if(SeparatePostPage == null) {
+            Page<SeparatePostResponseItem> emptyPage = Page.empty();
+            PageResponse pageResponse = new PageResponse(emptyPage);
+            return new SeparatePostResponsePage(List.of(), pageResponse);
+        }
+
         if (SeparatePostPage.isEmpty()) {
             throw new ApiException(SeparateMessage.POST_NOT_FOUND);
         }
