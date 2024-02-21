@@ -38,7 +38,7 @@ public class ResultController {
     public ReddyApiResponse<?> saveResultPost(@RequestBody SaveCheckResultRequest request,
                                               @AuthenticationPrincipal UserInfo user) {
         resultService.saveCheckResult(request, user.getEmail());
-        return ReddyApiResponse.createResponse(null, ResultMessage.RESULT_SAVE_SUCCESS);
+        return ReddyApiResponse.createResponse("", ResultMessage.RESULT_SAVE_SUCCESS);
     }
 
     @GetMapping("/check")
