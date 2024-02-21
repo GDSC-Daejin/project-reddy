@@ -6,9 +6,9 @@ import lombok.Builder;
 @Builder
 public record SeparatePostResponseItem(
         CategoryResponseDto category,
+        Long id,
         String imageUrl,
-        String title,
-        String description
+        String title
 ) {
 
 }

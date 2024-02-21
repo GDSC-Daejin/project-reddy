@@ -11,6 +11,7 @@ import com.solution.reddy.domain.result.resository.ResultPostRepository;
 import com.solution.reddy.domain.result.resository.ResultRepository;
 import com.solution.reddy.domain.user.entity.UserEntity;
 import com.solution.reddy.domain.user.repository.UserRepository;
+import com.solution.reddy.global.api.AiModelApi;
 import com.solution.reddy.global.exception.ApiException;
 import com.solution.reddy.global.message.ResultGroupMessage;
 import com.solution.reddy.global.message.ResultMessage;
@@ -26,6 +27,8 @@ public class ResultService {
     private final ResultPostRepository resultPostRepository;
     private final ResultGroupRepository resultGroupRepository;
     private final UserRepository userRepository;
+
+    private final AiModelApi aiModelApi;
 
     public void saveCheckResult(SaveCheckResultRequest request, String email) {
         ResultGroupEntity groupEntity;
@@ -65,7 +68,7 @@ public class ResultService {
     }
 
     public AIResultResponse checkImageWithAI(AIResultRequest request) {
-
+        aiModelApi.runAiModel(request.imageUrl());
         return AIResultResponse.builder()
                 .id(1L)
                 .title("title")

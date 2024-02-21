@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Operation(summary = "분리수거 게시물 카테고리별 조회 API", description = "분리수거 게시물 조회 API 입니다.")
+@Operation(summary = "분리수거 게시물 조회 API", description = "분리수거 게시물 조회 API 입니다.")
 @ApiResponses(value = {
         @ApiResponse(responseCode = "200", useReturnTypeSchema = true),
         @ApiResponse(
@@ -22,5 +22,5 @@ import java.lang.annotation.Target;
                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServerErrorException.class))
         )
 })
-public @interface GetSeparatePostSpringDocs {
+public @interface GetSeparatePostDetailSpringDocs {
 }

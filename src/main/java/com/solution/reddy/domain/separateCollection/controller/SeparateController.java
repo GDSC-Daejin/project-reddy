@@ -1,10 +1,12 @@
 package com.solution.reddy.domain.separateCollection.controller;
 
 import com.solution.reddy.domain.separateCollection.controller.springdocs.CreateSeparatePostSpringDocs;
+import com.solution.reddy.domain.separateCollection.controller.springdocs.GetSeparatePostDetailSpringDocs;
 import com.solution.reddy.domain.separateCollection.controller.springdocs.GetSeparatePostSpringDocs;
 import com.solution.reddy.domain.separateCollection.controller.springdocs.SearchSeparatePostSpringDocs;
 import com.solution.reddy.domain.separateCollection.dto.SeparatePostRequest;
 import com.solution.reddy.domain.separateCollection.dto.SeparatePostSearchRequest;
+import com.solution.reddy.domain.separateCollection.dto.response.SeparatePostDetailDto;
 import com.solution.reddy.domain.separateCollection.dto.response.SeparatePostResponsePage;
 import com.solution.reddy.domain.separateCollection.service.SeparateService;
 import com.solution.reddy.global.controller.FirstVersionRestController;
@@ -38,6 +40,13 @@ public class SeparateController {
     public ReddyApiResponse<SeparatePostResponsePage> getSeparateByCategory(@RequestParam Long category,
                                                                             @PageableDefault @Parameter(hidden = true) Pageable pageable) {
         SeparatePostResponsePage response = separateService.getSeparateByCategory(category, pageable);
+        return ReddyApiResponse.createResponse(response, SeparateMessage.POST_GET_SUCCESS);
+    }
+
+    @GetMapping("/separate/{id}")
+    @GetSeparatePostDetailSpringDocs
+    public ReddyApiResponse<SeparatePostDetailDto> getSeparatePost(@RequestParam Long postId) {
+        SeparatePostDetailDto response = separateService.getSeparateById(postId);
         return ReddyApiResponse.createResponse(response, SeparateMessage.POST_GET_SUCCESS);
     }
 
