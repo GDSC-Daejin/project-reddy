@@ -1,6 +1,7 @@
 package com.solution.reddy.domain.separateCollection.entity;
 
 import com.solution.reddy.domain.category.entity.CategoryEntity;
+import com.solution.reddy.domain.separateCollection.dto.response.SeparatePostDetailDto;
 import com.solution.reddy.domain.separateCollection.dto.response.SeparatePostResponseItem;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -36,10 +37,18 @@ public class SeparateEntity {
     public SeparatePostResponseItem toSeparatePostResponseItem() {
         return SeparatePostResponseItem.builder()
                 .category(this.category.toCategoryResponseDto())
+                .id(this.id)
+                .imageUrl(this.imageUrl)
+                .title(this.title)
+                .build();
+    }
+
+    public SeparatePostDetailDto toSeparatePostDetailDto() {
+        return SeparatePostDetailDto.builder()
+                .id(this.id)
                 .imageUrl(this.imageUrl)
                 .title(this.title)
                 .description(this.description)
                 .build();
     }
-
 }

@@ -3,6 +3,7 @@ package com.solution.reddy.domain.separateCollection.service;
 import com.solution.reddy.domain.category.entity.CategoryEntity;
 import com.solution.reddy.domain.category.service.CategoryService;
 import com.solution.reddy.domain.separateCollection.dto.SeparatePostRequest;
+import com.solution.reddy.domain.separateCollection.dto.response.SeparatePostDetailDto;
 import com.solution.reddy.domain.separateCollection.dto.response.SeparatePostResponseItem;
 import com.solution.reddy.domain.separateCollection.dto.response.SeparatePostResponsePage;
 import com.solution.reddy.domain.separateCollection.entity.SeparateEntity;
@@ -53,5 +54,11 @@ public class SeparateService {
 
         PageResponse pageResponse = new PageResponse(SeparatePostPage);
         return new SeparatePostResponsePage(SeparatePostPage.toList(), pageResponse);
+    }
+
+    public SeparatePostDetailDto getSeparateById(Long postId) {
+        return separateRepository.findById(postId)
+                .map(SeparateEntity::toSeparatePostDetailDto)
+                .orElseThrow(() -> new ApiException(SeparateMessage.POST_NOT_FOUND));
     }
 }
