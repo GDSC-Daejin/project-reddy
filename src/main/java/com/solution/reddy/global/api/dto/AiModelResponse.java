@@ -1,6 +1,8 @@
 package com.solution.reddy.global.api.dto;
 
-public record AiModelResponse(
-        PredictImgResult predictImgResult
+import java.util.List;
 
+public record AiModelResponse(
+        PredictImgResult predictImgResult,
+        List<Double> score
 ) { }

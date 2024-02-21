@@ -12,10 +12,12 @@ import com.solution.reddy.domain.result.resository.ResultRepository;
 import com.solution.reddy.domain.user.entity.UserEntity;
 import com.solution.reddy.domain.user.repository.UserRepository;
 import com.solution.reddy.global.api.AiModelApi;
+import com.solution.reddy.global.api.dto.AiModelResponse;
 import com.solution.reddy.global.exception.ApiException;
 import com.solution.reddy.global.message.ResultGroupMessage;
 import com.solution.reddy.global.message.ResultMessage;
 import com.solution.reddy.global.message.UserMessage;
+import com.sun.jdi.LongValue;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -68,11 +70,10 @@ public class ResultService {
     }
 
     public AIResultResponse checkImageWithAI(AIResultRequest request) {
-        aiModelApi.runAiModel(request.imageUrl());
-        return AIResultResponse.builder()
-                .id(1L)
-                .title("title")
-                .description("description")
-                .build();
+        AiModelResponse modelResponse = aiModelApi.runAiModel(request.toAirequestDto());
+        Long resultId = Long.parseLong(modelResponse.predictImgResult().productCode()) + 1L;
+        return resultRepository.findById(resultId)
+                .map(ResultEntity::toAIResultResponse)
+                .orElseThrow(() -> new ApiException(ResultMessage.RESULT_NOT_FOUND));
     }
 }
