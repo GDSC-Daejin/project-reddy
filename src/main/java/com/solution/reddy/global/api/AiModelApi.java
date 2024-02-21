@@ -1,5 +1,7 @@
 package com.solution.reddy.global.api;
 
+import com.solution.reddy.global.api.dto.AiModelResponse;
+import com.solution.reddy.global.api.dto.AirequestDto;
 import com.solution.reddy.global.exception.RunModelErrorDecoder;
 import feign.codec.ErrorDecoder;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -12,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface AiModelApi {
 
     @PostMapping(value = "/predict", produces = MediaType.APPLICATION_JSON_VALUE)
-    void runAiModel(
-            @RequestBody String imageUrl
+    AiModelResponse runAiModel(
+            @RequestBody AirequestDto imageUrl
     );
 
     class FeignConfig {

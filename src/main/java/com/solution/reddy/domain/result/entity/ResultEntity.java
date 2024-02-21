@@ -1,5 +1,6 @@
 package com.solution.reddy.domain.result.entity;
 
+import com.solution.reddy.domain.result.dto.AIResultResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,4 +25,12 @@ public class ResultEntity {
     private String title;
     @Column(length = 5000)
     private String description;
+
+    public AIResultResponse toAIResultResponse() {
+        return AIResultResponse.builder()
+                .id(this.id)
+                .title(this.title)
+                .description(this.description)
+                .build();
+    }
 }
